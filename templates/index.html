@@ -11,11 +11,6 @@
             background-color: #7470b6;
             color: #333;
         }
-
-        h1 {
-            color: #0b0b0b;
-        }
-
         form {
             margin-top: 20px;
             background-color: #fff;
@@ -59,31 +54,62 @@
         }
         nav {
             background-color: #fcfafa;
-            padding: 10px;
-            text-align: right;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-
-        .profile-icon {
+        .logo {
+            color: #080707;
+            text-decoration: none;
+            font-size: 24px;
+        }
+        .profile-info {
+            display: flex;
+            align-items: center;
+        }
+        .profile-icon, .logout-btn {
             color: #0c0c0c;
             text-decoration: none;
             margin-right: 20px;
             font-size: 18px;
         }
-    </style>
 
+        .logout-btn {
+            color: #ff0000;
+            padding: 8px 12px;
+            border: 1px solid #ff0000;
+            border-radius: 4px;
+            background-color: #fff;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #ff0000;
+            color: #fff;
+        }
+        .profile-icon .username {
+            display: none;
+        }
+        .profile-icon:hover .username {
+            display: inline;
+        }
+    </style>
 </head>
 <body>
     <nav>
-        <a class="navbar-brand" href="#">Road Side Unit using Blockchain and IoT</a>
-        <a href="#" class="profile-icon">Profile: {{ username }}</a>
+        <a class="logo" href="#"><h1>Face Verification</h1></a>
+        <div class="profile-info">
+            <div class="profile-dropdown">
+                <a href="#" class="profile-icon" id="profileLink">Profile</a>
+                <div class="dropdown-content" id="profileDropdownContent">
+                    <p>Welcome Hi, {{ username }}</p>
+                    <a href="/logout" class="logout-btn">Logout</a>
+                </div>
+            </div>
+        </div>        
     </nav>
-    <!-- <h1>Face Verification</h1> -->
-    <!-- 
-        
-        
-        
-        <h3>Result:{{status}}</h3> -->
-
     <form action="/index" method="post" enctype="multipart/form-data">
         <label for="file1">Upload Image 1:</label>
         <input type="file" name="file1" required>
@@ -97,11 +123,11 @@
             {%else%}
                 <span style="color:blue">{{err}}</span>
             {%endif%}
-            </h3>
+        </h3>
         <h3 style="color:red">{{error}}</h3>
         <br>
 
         <input type="submit" value="Verify Images">
-    </form>
+    </form>    
 </body>
 </html>

@@ -19,7 +19,8 @@ def login():
     password=request.form['password']
     res=users.find_one({"username":user})
     if res and dict(res)['password']==password:
-        return render_template('index.html')
+        session['username']=user
+        return render_template('index.html',username=session['username'])
     else:
         return render_template('login.html',status='User does not exist or wrong password')
 
@@ -48,6 +49,7 @@ def register():
 def indexpage():
     result = None
     stat = None
+    username = session['username']
 
     if request.method == 'POST':
         # Check if the post request has the file part
@@ -60,7 +62,7 @@ def indexpage():
         # If user does not select file, browser also
         # submit an empty part without filename
         if file1.filename == '' or file2.filename == '':
-            return render_template('index.html', error="Please select two files to upload.")
+            return render_template('index.html', username=session['username'],error="Please select two files to upload.")
 
         try:
             file1_path = "uploads/" + file1.filename
@@ -75,12 +77,12 @@ def indexpage():
             print(stat)
             if stat is not None:
                 if stat :
-                    return render_template('index.html', status="Real")
+                    return render_template('index.html',username=session['username'], status="Real")
                 else:
-                    return render_template('index.html',err="Fake")
+                    return render_template('index.html',username=session['username'],err="Fake")
 
         except Exception as e:
-            return render_template('index.html', error=f"An error occurred: {str(e)}")
+            return render_template('index.html', username=session['username'],error=f"An error occurred: {str(e)}")
     
     
     
